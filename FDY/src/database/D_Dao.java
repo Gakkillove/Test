@@ -15,55 +15,6 @@ import base.B_time;
 //基础数据库操作
 public class D_Dao {
 	
-	//修改订单状态信息
-	public static boolean Notify(String order_number,String money_total,String pay_number,String paytype) {
-		boolean b=false;
-		String sql="select * from pay where order_number=? and money_total=?";
-		String par=order_number+","+money_total;
-		Connection conn=D_Base.Opendb();
-		if (NoExist(conn,sql, par)) {
-			//***
-		} else {
-			String s_id=D_Dao.Select(conn,sql, par, "s_id");
-			String desk=D_Dao.Select(conn,sql, par, "desk");
-			sql="insert into message(s_id,desk,type) values(?,?,?)";
-			par=s_id+","+desk+",payed";
-			D_Dao.Up(sql, par);
-			sql="update desk set peopletotal=0 where s_id=? and number=?";
-			D_Dao.Up(sql, s_id+","+desk);
-			sql="update orders set state=3 where s_id=? and desk=?";
-			D_Dao.Up(sql, s_id+","+desk);
-			sql="update pay set is_payed='y',pay_order_number=?,payed_time_str=?,payed_time=?,pay_type=?,is_online_payment='y'"
-					+ " where order_number=?";
-			par=pay_number+","+B_time.Time()+","+B_time.Time()+","+paytype+","+order_number;
-			if (D_Dao.Up(sql, par)) {
-				b=true;
-			}
-		}
-		D_Base.Closedb(conn);
-		return b;
-	}
-
-	//修改桌贴订单状态信息
-	public static boolean Notify_ZT(String order_number,String pay_number,String paytype) {
-		boolean b=false;
-		String sql="select * from third_zhuotie where order_number=? and is_payed='n'";
-		String par=order_number;
-		Connection conn=D_Base.Opendb();
-		if (NoExist(conn,sql, par)) {
-			System.out.println("回调信息有误！"+order_number);
-			//***
-		} else {
-			sql="update third_zhuotie set is_payed='y' where order_number=?";
-			par=order_number;
-			if (D_Dao.Up(sql, par)) {
-				b=true;
-			}
-		}
-		D_Base.Closedb(conn);
-		return b;
-	}
-	
 	public static boolean NoExist(String sql,String parameter) {
 		boolean b=true;
 		Connection conn=D_Base.Opendb();

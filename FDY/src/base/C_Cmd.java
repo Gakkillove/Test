@@ -7,8 +7,6 @@ public class C_Cmd {
 	public static final String[] Type_yn={"y","n"};
 	//日志类型
 	public static final String[] Type_log={"js","java","sql","dao","io","file","request","login","do","other"};
-	//全局路径变量(日志txt文件路径,学校静态资源路径)
-	public static final String[] Add_src={"C:\\src_host\\system\\log\\log.txt","C:\\diancanyun_src\\"};
 	//字符表(英文),切勿修改
 	public static final String[] letter={"0","1","2","3","4","5","6","7","8","9",
 			"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",

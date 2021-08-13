@@ -42,9 +42,4 @@ public class I_IPinfo {
         }
         return restr;
 	}
-	/*
-    public static void main(String[] args) {
-        System.out.println(I_IPinfo.getIPinfo_Aliyun("39.128.165.14"));
-    }
-    */
 }
